@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.buttonStartStop = new System.Windows.Forms.Button();
             this.checkBoxAudioWarningOnConnChange = new System.Windows.Forms.CheckBox();
             this.checkBoxFocusOnConnChange = new System.Windows.Forms.CheckBox();
@@ -36,8 +37,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.numericUpDownPingIntervall = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
+            this.timerInterval = new System.Windows.Forms.Timer(this.components);
+            this.label4 = new System.Windows.Forms.Label();
+            this.numericUpDownPacketLossThreshold = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDownDetectionThreshold)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPingIntervall)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPacketLossThreshold)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonStartStop
@@ -63,7 +68,7 @@
             // checkBoxFocusOnConnChange
             // 
             this.checkBoxFocusOnConnChange.AutoSize = true;
-            this.checkBoxFocusOnConnChange.Location = new System.Drawing.Point(12, 64);
+            this.checkBoxFocusOnConnChange.Location = new System.Drawing.Point(12, 59);
             this.checkBoxFocusOnConnChange.Name = "checkBoxFocusOnConnChange";
             this.checkBoxFocusOnConnChange.Size = new System.Drawing.Size(232, 17);
             this.checkBoxFocusOnConnChange.TabIndex = 2;
@@ -73,7 +78,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 84);
+            this.label1.Location = new System.Drawing.Point(9, 79);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(148, 13);
             this.label1.TabIndex = 3;
@@ -81,7 +86,7 @@
             // 
             // numericUpDownDownDetectionThreshold
             // 
-            this.numericUpDownDownDetectionThreshold.Location = new System.Drawing.Point(166, 82);
+            this.numericUpDownDownDetectionThreshold.Location = new System.Drawing.Point(166, 77);
             this.numericUpDownDownDetectionThreshold.Minimum = new decimal(new int[] {
             1,
             0,
@@ -91,7 +96,7 @@
             this.numericUpDownDownDetectionThreshold.Size = new System.Drawing.Size(65, 20);
             this.numericUpDownDownDetectionThreshold.TabIndex = 4;
             this.numericUpDownDownDetectionThreshold.Value = new decimal(new int[] {
-            1,
+            4,
             0,
             0,
             0});
@@ -99,7 +104,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 107);
+            this.label2.Location = new System.Drawing.Point(12, 131);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(68, 13);
             this.label2.TabIndex = 5;
@@ -113,9 +118,9 @@
             0,
             0,
             65536});
-            this.numericUpDownPingIntervall.Location = new System.Drawing.Point(166, 105);
+            this.numericUpDownPingIntervall.Location = new System.Drawing.Point(166, 129);
             this.numericUpDownPingIntervall.Minimum = new decimal(new int[] {
-            20,
+            10,
             0,
             0,
             65536});
@@ -127,21 +132,55 @@
             0,
             0,
             65536});
+            this.numericUpDownPingIntervall.ValueChanged += new System.EventHandler(this.numericUpDownPingIntervall_ValueChanged);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(237, 107);
+            this.label3.Location = new System.Drawing.Point(237, 131);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(12, 13);
             this.label3.TabIndex = 7;
             this.label3.Text = "s";
+            // 
+            // timerInterval
+            // 
+            this.timerInterval.Interval = 2000;
+            this.timerInterval.Tick += new System.EventHandler(this.timerInterval_Tick);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 105);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(152, 13);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "Packetloss Warning Threshold";
+            // 
+            // numericUpDownPacketLossThreshold
+            // 
+            this.numericUpDownPacketLossThreshold.Location = new System.Drawing.Point(166, 103);
+            this.numericUpDownPacketLossThreshold.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownPacketLossThreshold.Name = "numericUpDownPacketLossThreshold";
+            this.numericUpDownPacketLossThreshold.Size = new System.Drawing.Size(65, 20);
+            this.numericUpDownPacketLossThreshold.TabIndex = 9;
+            this.numericUpDownPacketLossThreshold.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(286, 192);
+            this.Controls.Add(this.numericUpDownPacketLossThreshold);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.numericUpDownPingIntervall);
             this.Controls.Add(this.label2);
@@ -155,6 +194,7 @@
             this.Text = "VisualAlertOnDisconnect";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDownDetectionThreshold)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPingIntervall)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPacketLossThreshold)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -170,6 +210,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown numericUpDownPingIntervall;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Timer timerInterval;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.NumericUpDown numericUpDownPacketLossThreshold;
     }
 }
 

@@ -17,7 +17,7 @@ namespace OnConnChange
         public static int MorseTimingDash { get { return 3 * MorseTimeDit; } }
         public static int MorseTimingWord { get { return 7 * MorseTimeDit; } }
 
-        public static void String(string s)
+        public static void MorseAsString(string s)
         {
             s = s.ToLowerInvariant();
             for (int i = 0; i < s.Length; i++)
@@ -30,54 +30,54 @@ namespace OnConnChange
         {
             switch (c.ToString().ToLowerInvariant())
             {
-                case "a": FromString(".- "); break;
-                case "b": FromString("-... "); break;
-                case "c": FromString("-.-. "); break;
-                case "d": FromString("-.. "); break;
-                case "e": FromString(". "); break;
-                case "f": FromString("..-. "); break;
-                case "g": FromString("--. "); break;
-                case "h": FromString(".... "); break;
-                case "i": FromString(".. "); break;
-                case "j": FromString(".--- "); break;
-                case "k": FromString("-.- "); break;
-                case "l": FromString(".-.. "); break;
-                case "m": FromString("-- "); break;
-                case "n": FromString("-. "); break;
-                case "o": FromString("--- "); break;
-                case "p": FromString(".--. "); break;
-                case "q": FromString("--.- "); break;
-                case "r": FromString(".-. "); break;
-                case "s": FromString("... "); break;
-                case "t": FromString("- "); break;
-                case "u": FromString("..- "); break;
-                case "v": FromString("...- "); break;
-                case "w": FromString(".-- "); break;
-                case "x": FromString("-..- "); break;
-                case "y": FromString("-.-- "); break;
-                case "z": FromString("--.. "); break;
+                case "a": MorseCodeString(".- "); break;
+                case "b": MorseCodeString("-... "); break;
+                case "c": MorseCodeString("-.-. "); break;
+                case "d": MorseCodeString("-.. "); break;
+                case "e": MorseCodeString(". "); break;
+                case "f": MorseCodeString("..-. "); break;
+                case "g": MorseCodeString("--. "); break;
+                case "h": MorseCodeString(".... "); break;
+                case "i": MorseCodeString(".. "); break;
+                case "j": MorseCodeString(".--- "); break;
+                case "k": MorseCodeString("-.- "); break;
+                case "l": MorseCodeString(".-.. "); break;
+                case "m": MorseCodeString("-- "); break;
+                case "n": MorseCodeString("-. "); break;
+                case "o": MorseCodeString("--- "); break;
+                case "p": MorseCodeString(".--. "); break;
+                case "q": MorseCodeString("--.- "); break;
+                case "r": MorseCodeString(".-. "); break;
+                case "s": MorseCodeString("... "); break;
+                case "t": MorseCodeString("- "); break;
+                case "u": MorseCodeString("..- "); break;
+                case "v": MorseCodeString("...- "); break;
+                case "w": MorseCodeString(".-- "); break;
+                case "x": MorseCodeString("-..- "); break;
+                case "y": MorseCodeString("-.-- "); break;
+                case "z": MorseCodeString("--.. "); break;
 
-                case "1": FromString(".---- "); break;
-                case "2": FromString("..--- "); break;
-                case "3": FromString("...-- "); break;
-                case "4": FromString("....- "); break;
-                case "5": FromString("..... "); break;
-                case "6": FromString("-.... "); break;
-                case "7": FromString("--... "); break;
-                case "8": FromString("---.. "); break;
-                case "9": FromString("----. "); break;
-                case "0": FromString("----- "); break;
+                case "1": MorseCodeString(".---- "); break;
+                case "2": MorseCodeString("..--- "); break;
+                case "3": MorseCodeString("...-- "); break;
+                case "4": MorseCodeString("....- "); break;
+                case "5": MorseCodeString("..... "); break;
+                case "6": MorseCodeString("-.... "); break;
+                case "7": MorseCodeString("--... "); break;
+                case "8": MorseCodeString("---.. "); break;
+                case "9": MorseCodeString("----. "); break;
+                case "0": MorseCodeString("----- "); break;
 
-                case ".": FromString(".-.-.- "); break;
-                case ",": FromString("--..-- "); break;
-                case "?": FromString("..--.. "); break;
-                case "@": FromString(".--.-. "); break;
+                case ".": MorseCodeString(".-.-.- "); break;
+                case ",": MorseCodeString("--..-- "); break;
+                case "?": MorseCodeString("..--.. "); break;
+                case "@": MorseCodeString(".--.-. "); break;
 
-                case "": FromString("!"); break;
+                case "": MorseCodeString("!"); break;
             }
         }
 
-        public static void FromString(String morse)
+        public static void MorseCodeString(String morse)
         {
             for (int i = 0; i < morse.Length; i++)
             {
