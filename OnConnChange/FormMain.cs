@@ -23,7 +23,8 @@ namespace OnConnChange
         private static int MaxConnDetailsCount = 128;
         private static List<Tuple<DateTime, long>> ConnDetails = new List<Tuple<DateTime, long>>(MaxConnDetailsCount);
         private static Object ConnDetailsLock = new Object();
-        private bool OfflineSignaled;
+        private bool OfflineSignaled = false;
+        private bool OnlineSignaled = false;
 
         public FormMain()
         {
@@ -66,31 +67,34 @@ namespace OnConnChange
             {
                 PingReply reply = e.Reply;
                 
-                ConnDetails.Add(new Tuple<DateTime, long>(DateTime.Now, reply.RoundtripTime));
-                #if DEBUG
+                
+                DrawPing(reply);
+
+#if DEBUG
                 DebugPing(reply);
-                #endif
+#endif
                 if (ConnDetails.Count > MaxConnDetailsCount && MaxConnDetailsCount > 0)
                 {
                     ConnDetails.RemoveAt(0);
                 }
-                if (reply.Status == IPStatus.Success)
+                if (reply.RoundtripTime >= 1)
                 {
                     
-                    if (reply.Status == IPStatus.Success && ConnDetails.Last().Item2 == 0)
+                    if (reply.Status == IPStatus.Success && (ConnDetails.Count > 0 && ConnDetails.Last().Item2 == 0))
                     {
+                        if(OfflineSignaled)
                         GoneOnline();
                     }
                 }
-                //else // Not connected or unsuccessful ping
-                //{
-                if (OfflineThreshold() && !OfflineSignaled)
+
+                ConnDetails.Add(new Tuple<DateTime, long>(DateTime.Now, reply.RoundtripTime));
+                if (ConnDetails.Count > 0 && OfflineThreshold() && !OfflineSignaled)
                 {
                     GoneOffline();
                 }
                 
 
-                DrawPing(reply);
+                
             }
         }
 
@@ -100,11 +104,12 @@ namespace OnConnChange
         {
 #if DEBUG
             Console.WriteLine("GoneOffline()");
-            MessageBox.Show("GoneOffline();");
+            //MessageBox.Show("GoneOffline();");
 #endif
             OptionFocus();
             OptionSound(false);
             OfflineSignaled = true;
+            OnlineSignaled = false;
         }
 
         // TODO: IMPLEMENT HOOKINS
@@ -112,11 +117,12 @@ namespace OnConnChange
         {
 #if DEBUG
             Console.WriteLine("GoneOnline()");
-            MessageBox.Show("GoneOnline();");
+            //MessageBox.Show("GoneOnline();");
 #endif
             OptionFocus();
             OptionSound(true);
             OfflineSignaled = false;
+            OnlineSignaled = true;
         }
 
         private void OptionFocus()
