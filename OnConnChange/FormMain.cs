@@ -83,7 +83,7 @@ namespace OnConnChange
                     if (reply.Status == IPStatus.Success && (ConnDetails.Count > 0 && ConnDetails.Last().Item2 == 0))
                     {
                         if(OfflineSignaled)
-                        GoneOnline();
+                            GoneOnline();
                     }
                 }
 
@@ -139,7 +139,7 @@ namespace OnConnChange
             {
                 if(!nowOnline)
                 {
-                    Morse.MorseCodeString("...---...");
+                    Morse.MorseCodeString("...");
                 }
                 else
                 {

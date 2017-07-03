@@ -8,7 +8,7 @@ namespace OnConnChange
 {
     public static class IPList
     {
-        private static String[] IPs = { "8.8.4.4", "8.8.8.8" };
+        private static String[] IPs = { "8.8.4.4", "8.8.8.8", "4.2.2.2" };
         private static Random r = new Random();
         private static int lastIndex = -1;
 
