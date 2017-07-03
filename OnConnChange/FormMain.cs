@@ -17,12 +17,13 @@ namespace OnConnChange
         public DateTime timeStarted = DateTime.Now;
         Ping pingSender = new Ping();
         byte[] buffer = Encoding.ASCII.GetBytes("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        int timeout = 2000;
+        int timeout = 800;
         AutoResetEvent waiter = new AutoResetEvent(false);
         PingOptions PingOptions = new PingOptions(64, true);
         private static int MaxConnDetailsCount = 128;
         private static List<Tuple<DateTime, long>> ConnDetails = new List<Tuple<DateTime, long>>(MaxConnDetailsCount);
         private static Object ConnDetailsLock = new Object();
+        private bool OfflineSignaled;
 
         public FormMain()
         {
@@ -35,6 +36,9 @@ namespace OnConnChange
         {
             timerInterval.Enabled = !timerInterval.Enabled;
             buttonStartStop.Text = timerInterval.Enabled ? "Stop" : "Start";
+
+            groupBoxOptions.Size = new Size(groupBoxOptions.Size.Width, (groupBoxOptions.Size.Height==0) ? 116: 0); // 153
+            this.Size = new Size(0,108);
         }
 
         private void numericUpDownPingIntervall_ValueChanged(object sender, EventArgs e)
@@ -61,6 +65,7 @@ namespace OnConnChange
             lock (ConnDetailsLock)
             {
                 PingReply reply = e.Reply;
+                
                 ConnDetails.Add(new Tuple<DateTime, long>(DateTime.Now, reply.RoundtripTime));
                 #if DEBUG
                 DebugPing(reply);
@@ -71,43 +76,47 @@ namespace OnConnChange
                 }
                 if (reply.Status == IPStatus.Success)
                 {
-                    if (ConnDetails.Last().Item2 == 0) // TODO: CHANGE TO DETECTION THRESHOLD VALUE
+                    
+                    if (reply.Status == IPStatus.Success && ConnDetails.Last().Item2 == 0)
                     {
                         GoneOnline();
                     }
                 }
-                else // Not connected or unsuccessful ping
+                //else // Not connected or unsuccessful ping
+                //{
+                if (OfflineThreshold() && !OfflineSignaled)
                 {
-                    if (PacketlossThreshold())
-                    {
-                        GonePacketlossy();
-                    }
-
-                    if (OfflineThreshold())
-                    {
-                        GoneOffline();
-                    }
+                    GoneOffline();
                 }
+                
+
+                DrawPing(reply);
             }
         }
 
-        private void GonePacketlossy()
-        {
-            //throw new NotImplementedException();
-        }
 
+        // TODO: IMPLEMENT HOOKINS
         private void GoneOffline()
         {
+#if DEBUG
             Console.WriteLine("GoneOffline()");
+            MessageBox.Show("GoneOffline();");
+#endif
             OptionFocus();
             OptionSound(false);
+            OfflineSignaled = true;
         }
 
+        // TODO: IMPLEMENT HOOKINS
         private void GoneOnline()
         {
+#if DEBUG
             Console.WriteLine("GoneOnline()");
+            MessageBox.Show("GoneOnline();");
+#endif
             OptionFocus();
             OptionSound(true);
+            OfflineSignaled = false;
         }
 
         private void OptionFocus()
@@ -128,7 +137,7 @@ namespace OnConnChange
                 }
                 else
                 {
-                    Morse.MorseCodeString("---------");
+                    Morse.MorseCodeString("---");
                 }
             }
         }
@@ -175,14 +184,53 @@ namespace OnConnChange
             }
         }
 
-        private bool PacketlossThreshold()
-        {
-            return FinalBatch(false, (int)numericUpDownPacketLossThreshold.Value);
-        }
 
         private void DebugPing(PingReply pr)
         {
             Console.WriteLine("Time: {3}, RTT: {0}, Dest: {1}, Success: {2}", pr.RoundtripTime, pr.Address.ToString(), pr.Status==IPStatus.Success, DateTime.Now);
+        }
+
+        private void DrawPing(PingReply pr)
+        {
+            // TODO: IMPLEMENT
+            chart1.Series[0].Points.Add(pr.RoundtripTime);
+            if (chart1.Series[0].Points.Count > 20)
+                chart1.Series[0].Points.RemoveAt(0);
+            changeYScala(chart1);
+        }
+
+        private void changeYScala(System.Windows.Forms.DataVisualization.Charting.Chart chart)
+        {
+            // start worst case
+            double max = Double.MinValue;
+            double min = Double.MaxValue;
+
+            double xMin = chart.ChartAreas[0].AxisX.Minimum;
+            double xMax = chart.ChartAreas[0].AxisX.Maximum;
+
+            for (int i = 0; i < chart.Series.Count(); i++) // For each Series
+            {
+                foreach (System.Windows.Forms.DataVisualization.Charting.DataPoint dp in chart.Series[i].Points)
+                {
+                    if (dp.XValue >= xMin && dp.XValue <= xMax)
+                    {
+                        min = Math.Min(min, dp.YValues[0]);
+                        max = Math.Max(max, dp.YValues[0]);
+                    }
+                }
+            }
+            chart.ChartAreas[0].AxisY.Maximum = (Math.Ceiling((max / 10)) * 10);
+            chart.ChartAreas[0].AxisY.Minimum = (Math.Floor((min / 10)) * 10);
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            this.TopMost = !this.TopMost;
+        }
+
+        private void chart1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
