@@ -20,61 +20,64 @@ namespace OnConnChange
         public static void MorseAsString(string s)
         {
             s = s.ToLowerInvariant();
+            StringBuilder sb = new StringBuilder();
             for (int i = 0; i < s.Length; i++)
             {
-                Character(s[i]);
+                sb.Append(Character(s[i]));
             }
+            MorseCodeString(sb.ToString());
         }
 
-        public static void Character(char c)
+        public static String Character(char c)
         {
             switch (c.ToString().ToLowerInvariant())
             {
-                case "a": MorseCodeString(".- "); break;
-                case "b": MorseCodeString("-... "); break;
-                case "c": MorseCodeString("-.-. "); break;
-                case "d": MorseCodeString("-.. "); break;
-                case "e": MorseCodeString(". "); break;
-                case "f": MorseCodeString("..-. "); break;
-                case "g": MorseCodeString("--. "); break;
-                case "h": MorseCodeString(".... "); break;
-                case "i": MorseCodeString(".. "); break;
-                case "j": MorseCodeString(".--- "); break;
-                case "k": MorseCodeString("-.- "); break;
-                case "l": MorseCodeString(".-.. "); break;
-                case "m": MorseCodeString("-- "); break;
-                case "n": MorseCodeString("-. "); break;
-                case "o": MorseCodeString("--- "); break;
-                case "p": MorseCodeString(".--. "); break;
-                case "q": MorseCodeString("--.- "); break;
-                case "r": MorseCodeString(".-. "); break;
-                case "s": MorseCodeString("... "); break;
-                case "t": MorseCodeString("- "); break;
-                case "u": MorseCodeString("..- "); break;
-                case "v": MorseCodeString("...- "); break;
-                case "w": MorseCodeString(".-- "); break;
-                case "x": MorseCodeString("-..- "); break;
-                case "y": MorseCodeString("-.-- "); break;
-                case "z": MorseCodeString("--.. "); break;
+                case "a": return ".- "; 
+                case "b": return"-... "; 
+                case "c": return "-.-. " ; 
+                case "d": return "-.. " ; 
+                case "e": return ". " ; 
+                case "f": return "..-. " ; 
+                case "g": return "--. " ; 
+                case "h": return ".... " ; 
+                case "i": return ".. " ; 
+                case "j": return ".--- " ; 
+                case "k": return "-.- " ; 
+                case "l": return ".-.. " ; 
+                case "m": return "-- " ; 
+                case "n": return "-. " ; 
+                case "o": return "--- " ; 
+                case "p": return ".--. " ; 
+                case "q": return "--.- " ; 
+                case "r": return ".-. " ; 
+                case "s": return "... " ; 
+                case "t": return "- " ; 
+                case "u": return "..- " ; 
+                case "v": return "...- " ; 
+                case "w": return ".-- " ; 
+                case "x": return "-..- " ; 
+                case "y": return "-.-- " ; 
+                case "z": return "--.. " ; 
 
-                case "1": MorseCodeString(".---- "); break;
-                case "2": MorseCodeString("..--- "); break;
-                case "3": MorseCodeString("...-- "); break;
-                case "4": MorseCodeString("....- "); break;
-                case "5": MorseCodeString("..... "); break;
-                case "6": MorseCodeString("-.... "); break;
-                case "7": MorseCodeString("--... "); break;
-                case "8": MorseCodeString("---.. "); break;
-                case "9": MorseCodeString("----. "); break;
-                case "0": MorseCodeString("----- "); break;
+                case "1": return ".---- " ; 
+                case "2": return "..--- " ; 
+                case "3": return "...-- " ; 
+                case "4": return "....- " ; 
+                case "5": return "..... " ; 
+                case "6": return "-.... " ; 
+                case "7": return "--... " ; 
+                case "8": return "---.. " ; 
+                case "9": return "----. " ; 
+                case "0": return "----- " ; 
 
-                case ".": MorseCodeString(".-.-.- "); break;
-                case ",": MorseCodeString("--..-- "); break;
-                case "?": MorseCodeString("..--.. "); break;
-                case "@": MorseCodeString(".--.-. "); break;
+                case ".": return ".-.-.- " ; 
+                case ",": return "--..-- " ; 
+                case "?": return "..--.. " ; 
+                case "@": return ".--.-. " ; 
 
-                case "": MorseCodeString("!"); break;
+                case "": return "!" ; 
             }
+            return "!";
         }
 
         public static void MorseCodeString(String morse)

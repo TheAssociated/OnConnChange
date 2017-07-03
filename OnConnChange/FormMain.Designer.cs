@@ -96,7 +96,7 @@
             this.numericUpDownDownDetectionThreshold.Size = new System.Drawing.Size(65, 20);
             this.numericUpDownDownDetectionThreshold.TabIndex = 4;
             this.numericUpDownDownDetectionThreshold.Value = new decimal(new int[] {
-            4,
+            2,
             0,
             0,
             0});
@@ -169,7 +169,7 @@
             this.numericUpDownPacketLossThreshold.Size = new System.Drawing.Size(65, 20);
             this.numericUpDownPacketLossThreshold.TabIndex = 9;
             this.numericUpDownPacketLossThreshold.Value = new decimal(new int[] {
-            2,
+            1,
             0,
             0,
             0});
@@ -178,7 +178,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(286, 192);
+            this.ClientSize = new System.Drawing.Size(284, 202);
             this.Controls.Add(this.numericUpDownPacketLossThreshold);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -190,7 +190,9 @@
             this.Controls.Add(this.checkBoxAudioWarningOnConnChange);
             this.Controls.Add(this.buttonStartStop);
             this.MaximizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(300, 240);
             this.Name = "FormMain";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "VisualAlertOnDisconnect";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDownDetectionThreshold)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPingIntervall)).EndInit();

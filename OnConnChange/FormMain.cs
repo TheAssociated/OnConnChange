@@ -62,8 +62,9 @@ namespace OnConnChange
             {
                 PingReply reply = e.Reply;
                 ConnDetails.Add(new Tuple<DateTime, long>(DateTime.Now, reply.RoundtripTime));
+                #if DEBUG
                 DebugPing(reply);
-
+                #endif
                 if (ConnDetails.Count > MaxConnDetailsCount && MaxConnDetailsCount > 0)
                 {
                     ConnDetails.RemoveAt(0);
@@ -74,7 +75,6 @@ namespace OnConnChange
                     {
                         GoneOnline();
                     }
-                    Console.Beep();
                 }
                 else // Not connected or unsuccessful ping
                 {
@@ -135,12 +135,10 @@ namespace OnConnChange
 
         private bool OfflineThreshold()
         {
-            return finalBatch(false, (int)numericUpDownDownDetectionThreshold.Value);
-            // TODO: IMPLEMENT
-            
+            return FinalBatch(false, (int)numericUpDownDownDetectionThreshold.Value);   
         }
 
-        private bool finalBatch(bool StatusToCheckFor, int count, int lookat = 0)
+        private bool FinalBatch(bool StatusToCheckFor, int count, int lookat = 0)
         {
             if (count <= 0 || ConnDetails.Count < count || lookat < 0 || (lookat > 0 && lookat < count) || count > MaxConnDetailsCount || lookat > MaxConnDetailsCount)
             {
@@ -179,7 +177,7 @@ namespace OnConnChange
 
         private bool PacketlossThreshold()
         {
-            return finalBatch(false, (int)numericUpDownPacketLossThreshold.Value);
+            return FinalBatch(false, (int)numericUpDownPacketLossThreshold.Value);
         }
 
         private void DebugPing(PingReply pr)
